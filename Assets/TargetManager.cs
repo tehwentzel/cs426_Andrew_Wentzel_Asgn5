@@ -53,8 +53,9 @@ public class TargetManager : NetworkBehaviour
     }
 
     void postAddresses(){
-        string billBoardText = "";
+        string billBoardText = "Instructions:\n";
         foreach(string addr in addresses){
+            billBoardText += "goto ";
             billBoardText += addr;
             billBoardText += "\n";
         }

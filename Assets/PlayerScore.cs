@@ -3,27 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 
-public class PlayerScore : NetworkBehaviour
+public class PlayerScore : ManagedBehaviour
 {
     // Start is called before the first frame update
-    public TargetManager targetManager;
     public SyncListString addresses;
 
     [SyncVar]
     public int score = 0;
     public int maxScore;
-
-    void Start()
-    {
-        //get the target manager.  assumes only one (todo: make it a singleton)
-        targetManager =  (TargetManager) GameObject.FindObjectOfType(typeof(TargetManager));
-        //get the shuffled addresses of the target manager
-        addresses = targetManager.getAddresses();
-        foreach(string a in addresses){
-            Debug.Log(a);
-        }
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -31,9 +18,25 @@ public class PlayerScore : NetworkBehaviour
         
     }
 
+    public override void OnStartClient(){
+        StartCoroutine(WaitForTargetManager());
+    }
+
+    private IEnumerator WaitForTargetManager(){
+        while(GameObject.FindObjectOfType(typeof(TargetManager)) == null){
+            yield return null;
+        }
+        targetManager = (TargetManager) GameObject.FindObjectOfType(typeof(TargetManager));
+        addresses = targetManager.getAddresses();
+        isLoaded = true;
+    }
+
     [Command]
     public void CmdScoreHit(){
         //increment the score if you hit the right target
+        if(!isLoaded)
+            return;
+
         if(score < addresses.Count){
             score += 1;
         }
@@ -48,7 +51,7 @@ public class PlayerScore : NetworkBehaviour
     }
 
     public void checkTarget(string targetAddress){
-        if(!isLocalPlayer)
+        if(!isLocalPlayer || !isLoaded)
             return;
         if(currentTargetAddress() == targetAddress){
             CmdScoreHit();
@@ -64,7 +67,7 @@ public class PlayerScore : NetworkBehaviour
     }
 
     private void OnCollisionEnter(Collision collision){
-        if(!isLocalPlayer)
+        if(!isLocalPlayer || !isLoaded)
             return;
 
         if(collision.gameObject.tag == "AddressTarget"){
@@ -73,7 +76,6 @@ public class PlayerScore : NetworkBehaviour
             if(!target.isActive)
                 return;
 
-            Debug.Log(target.getAddress());
             MeshRenderer targetMesh = collision.gameObject.GetComponent<MeshRenderer>();
 
             if(target.getAddress() == currentTargetAddress()){

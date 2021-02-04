@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Collections;
 
-public class PlayerMove : NetworkBehaviour
+public class PlayerMove : ManagedBehaviour
 {
     public float speed = 25.0f;
     public float rotationSpeed = 90;
@@ -9,7 +10,6 @@ public class PlayerMove : NetworkBehaviour
     public float invertCameraSpeed = .5f;
 
     public float cameraRotaton = 0f;
-    public TargetManager targetManager;
 
     Rigidbody rb;
     Transform t;
@@ -34,13 +34,10 @@ public class PlayerMove : NetworkBehaviour
 
     void Update()
     {
-        if (!isLocalPlayer)
+        if (!isLocalPlayer || !isLoaded)
             return;
 
         float gY = gravityDirection();
-        Debug.Log("gravity");
-        Debug.Log(t.up.y);
-        Debug.Log(gY);
         //if gravit has flipped, rotate around the z axis and disable controls so it doesn't break stuff
         if(t.up.y != -gY & (Mathf.Abs(t.up.y + gY) > .001)){
             t.RotateAround(t.position, this.transform.forward, 1);
@@ -67,6 +64,5 @@ public class PlayerMove : NetworkBehaviour
         //based on onine code, set the main camera target to follow the player
         GetComponent<MeshRenderer>().material.color = Color.red;
         Camera.main.GetComponent<CameraFollow>().setTarget(gameObject.transform);
-        targetManager = (TargetManager) GameObject.FindObjectOfType(typeof(TargetManager));
     }
 }

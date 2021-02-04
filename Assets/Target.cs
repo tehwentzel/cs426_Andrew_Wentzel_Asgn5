@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class Target : NetworkBehaviour
+public class Target : ManagedBehaviour
 {
     //code for he target the player needs to hit.
     [SyncVar]
@@ -18,7 +18,6 @@ public class Target : NetworkBehaviour
     public Text addressText;
     public Canvas addressCanvas;
     public Rigidbody rb;
-    public TargetManager targetManager;
 
     void Start(){  
         //get the canvas and text attachd to this.  assumes only one
@@ -26,11 +25,6 @@ public class Target : NetworkBehaviour
         addressText = txt.GetComponent<Text>();
         addressCanvas = transform.Find("Canvas").gameObject.GetComponent<Canvas>();
         rb = GetComponent<Rigidbody>();
-        targetManager = (TargetManager) GameObject.FindObjectOfType(typeof(TargetManager));
-    }
-
-    void OnStartLocalPlayer(){
-        targetManager = (TargetManager) GameObject.FindObjectOfType(typeof(TargetManager));
     }
 
     // Update is called once per frame
@@ -38,8 +32,11 @@ public class Target : NetworkBehaviour
         //rotate text to look at the player camera. Don't know if this works with networking
         addressText.text = address;
         addressCanvas.transform.LookAt(Camera.main.transform);
-
-        rb.AddForce(targetManager.getGravity()*50.0f);
+        if(isLoaded){
+            rb.AddForce(targetManager.getGravity()*50.0f);
+        } else{
+            rb.AddForce(new Vector3(0, -500.0f, 0));
+        }
 
     }
 
