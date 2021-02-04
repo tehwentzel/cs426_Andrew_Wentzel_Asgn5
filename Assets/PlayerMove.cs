@@ -4,9 +4,9 @@ using System.Collections;
 
 public class PlayerMove : ManagedBehaviour
 {
-    public float speed = 25.0f;
+    public float speed = 1000000.0f;
     public float rotationSpeed = 90;
-    public float force = 1f;
+    public float force = 0.01f;
     public float invertCameraSpeed = .5f;
 
     public float cameraRotaton = 0f;
@@ -21,7 +21,7 @@ public class PlayerMove : ManagedBehaviour
     }
 
     void applyGravity(){
-        rb.AddForce(targetManager.getGravity());
+        rb.AddForce(10*targetManager.getGravity());
     }
 
     float gravityDirection(){
@@ -41,6 +41,8 @@ public class PlayerMove : ManagedBehaviour
         //if gravit has flipped, rotate around the z axis and disable controls so it doesn't break stuff
         if(t.up.y != -gY & (Mathf.Abs(t.up.y + gY) > .001)){
             t.RotateAround(t.position, this.transform.forward, 1);
+            //make it fall faster
+            rb.AddForce(5*targetManager.getGravity());
         } else{
             //otherwise, do the movement stuff
             if (Input.GetKey(KeyCode.D))
@@ -55,8 +57,9 @@ public class PlayerMove : ManagedBehaviour
 
             // Quaternion returns a rotation that rotates x degrees around the x axis and so on
 
-            if (Input.GetKeyDown(KeyCode.Space))
-                rb.AddForce(t.up * force);
+            //No jumping - for some reason it likes to glitch out of the game
+            // if (Input.GetKeyDown(KeyCode.Space))
+            //     rb.AddForce(targetManager.getGravity() * -force/Time.deltaTime);
         }
     }
 

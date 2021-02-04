@@ -33,9 +33,9 @@ public class Target : ManagedBehaviour
         addressText.text = address;
         addressCanvas.transform.LookAt(Camera.main.transform);
         if(isLoaded){
-            rb.AddForce(targetManager.getGravity()*50.0f);
+            rb.AddForce(targetManager.getGravity()*5.0f);
         } else{
-            rb.AddForce(new Vector3(0, -500.0f, 0));
+            rb.AddForce(new Vector3(0, -50.0f, 0));
         }
 
     }
