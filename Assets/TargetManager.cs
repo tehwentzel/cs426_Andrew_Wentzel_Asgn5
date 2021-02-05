@@ -7,8 +7,12 @@ using UnityEngine.UI;
 public class TargetManager : NetworkBehaviour
 {
     public Target[] targets;
-
     public SyncListString addresses = new SyncListString();
+
+    //begings of attempt to make something keep track of score
+    public Dictionary<string, int> playerDict;
+    [SyncVar]
+    int numPlayers = 1;
 
     [SyncVar]
     public float gravityY = -10.0f;
@@ -46,6 +50,7 @@ public class TargetManager : NetworkBehaviour
         foreach(Target target in targets){
             target.invertGravityDirection();
         }
+        //Todo: move up/down billboard text
     }
 
     public Vector3 getGravity(){

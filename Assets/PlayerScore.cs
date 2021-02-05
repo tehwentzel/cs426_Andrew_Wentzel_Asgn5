@@ -28,6 +28,8 @@ public class PlayerScore : ManagedBehaviour
         }
         targetManager = (TargetManager) GameObject.FindObjectOfType(typeof(TargetManager));
         addresses = targetManager.getAddresses();
+        //add the player to the target manager here maybe?
+        ///
         isLoaded = true;
     }
 
@@ -83,10 +85,19 @@ public class PlayerScore : ManagedBehaviour
                 targetMesh.material.color = Color.green;
             } else{
                 CmdInvertGravity();
-                targetMesh.material.color = Color.red;
+                //only flash to red if it's not alread red or green
+                if(targetMesh.material.color != Color.green & targetMesh.material.color != Color.green)
+                    StartCoroutine(FlashColor(targetMesh));
             }
         }
         //on collision adding point to the score
+    }
+
+    IEnumerator FlashColor(MeshRenderer targetMesh){
+        Color currColor = targetMesh.material.color;
+        targetMesh.material.color = Color.red;
+        yield return new WaitForSeconds(2);
+        targetMesh.material.color = currColor;
     }
 
 }

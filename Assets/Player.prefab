@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 5619506242437922901}
   - component: {fileID: 853059726910995918}
   - component: {fileID: 1364979255524711508}
+  - component: {fileID: 4958310909281035622}
+  - component: {fileID: 2475074307633400519}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -139,6 +141,7 @@ MonoBehaviour:
   force: 2
   invertCameraSpeed: 0.5
   cameraRotaton: 0
+  animator: {fileID: 0}
 --- !u!114 &6772316911980058261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,3 +210,37 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: -1
   m_Mesh: {fileID: 3669258589346456565, guid: 9b574434f73c46a4eb333235dd556599, type: 3}
+--- !u!95 &4958310909281035622
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6018205465250435727}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 9b574434f73c46a4eb333235dd556599, type: 3}
+  m_Controller: {fileID: 9100000, guid: df2e20b0d1dd9a844b3c911ccf4843ee, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!111 &2475074307633400519
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6018205465250435727}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 2763998817853784565, guid: 9b574434f73c46a4eb333235dd556599, type: 3}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

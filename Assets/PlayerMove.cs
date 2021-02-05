@@ -29,6 +29,18 @@ public class PlayerMove : ManagedBehaviour
     }
 
     void FixedUpdate(){
+        if (!isLocalPlayer || !isLoaded)
+            return;
+
+        //apply gravity here since Update is called a different # of times on the client and server
+        float gY = gravityDirection();
+        //if gravit has flipped, rotate around the z axis and disable controls so it doesn't break stuff
+        if(t.up.y != -gY & (Mathf.Abs(t.up.y + gY) > .001)){
+            t.RotateAround(t.position, this.transform.forward, 5);
+            //make it fall faster
+            rb.AddForce(25*targetManager.getGravity());
+        } 
+
         applyGravity();
     }
 
@@ -38,17 +50,18 @@ public class PlayerMove : ManagedBehaviour
             return;
 
         float gY = gravityDirection();
-        //if gravit has flipped, rotate around the z axis and disable controls so it doesn't break stuff
+
+        //check if gravity just inverted
         if(t.up.y != -gY & (Mathf.Abs(t.up.y + gY) > .001)){
-            t.RotateAround(t.position, this.transform.forward, 1);
-            //make it fall faster
-            rb.AddForce(5*targetManager.getGravity());
+            //don't doo stuff while falling and flipping because that makes controlls weird
         } else{
             //otherwise, do the movement stuff
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.D)){
                 t.rotation *= Quaternion.Euler(0, -gY * rotationSpeed * Time.deltaTime, 0);
-            else if (Input.GetKey(KeyCode.A))
+            }
+            else if (Input.GetKey(KeyCode.A)){
                 t.rotation *= Quaternion.Euler(0, gY * rotationSpeed * Time.deltaTime, 0);
+            }
 
             if (Input.GetKey(KeyCode.W))
                 rb.velocity += this.transform.forward * speed * Time.deltaTime;
