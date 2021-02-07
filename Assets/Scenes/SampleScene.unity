@@ -1293,6 +1293,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 157273664784326649, guid: 2f8f6b47ec3688d45bcedb170d44b8c0, type: 3}
+      propertyPath: m_Name
+      value: ScoreCanvas
+      objectReference: {fileID: 0}
     - target: {fileID: 157273666091513984, guid: 2f8f6b47ec3688d45bcedb170d44b8c0, type: 3}
       propertyPath: m_RootOrder
       value: 21
@@ -1510,7 +1514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 852640818715539817, guid: baef710c79ceb1b4a84a23907a7acd25, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.99
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 852640818715539817, guid: baef710c79ceb1b4a84a23907a7acd25, type: 3}
       propertyPath: m_LocalPosition.z

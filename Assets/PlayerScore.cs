@@ -41,6 +41,9 @@ public class PlayerScore : ManagedBehaviour
 
         if(score < addresses.Count){
             score += 1;
+            int clientID = connectionToClient.connectionId;
+            targetManager.RpcUpdatePoints(clientID, score);
+
         }
         if(score >= addresses.Count){
             targetManager.RpcWin();
@@ -83,21 +86,26 @@ public class PlayerScore : ManagedBehaviour
             if(target.getAddress() == currentTargetAddress()){
                 CmdScoreHit();
                 targetMesh.material.color = Color.green;
+
             } else{
-                CmdInvertGravity();
-                //only flash to red if it's not alread red or green
-                if(targetMesh.material.color != Color.green & targetMesh.material.color != Color.green)
+                if(targetMesh.material.color != Color.red & targetMesh.material.color != Color.green)
+                {
+                    CmdInvertGravity();
+                    //only flash to red if it's not alread red or green
                     StartCoroutine(FlashColor(targetMesh));
+                }
             }
         }
         //on collision adding point to the score
     }
 
     IEnumerator FlashColor(MeshRenderer targetMesh){
-        Color currColor = targetMesh.material.color;
-        targetMesh.material.color = Color.red;
-        yield return new WaitForSeconds(2);
-        targetMesh.material.color = currColor;
+        if(targetMesh.material.color != Color.green & targetMesh.material.color != Color.red){
+            Color currColor = targetMesh.material.color;
+            targetMesh.material.color = Color.red;
+            yield return new WaitForSeconds(2);
+            targetMesh.material.color = currColor;
+        }
     }
 
 }

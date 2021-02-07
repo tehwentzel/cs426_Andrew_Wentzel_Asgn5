@@ -51,6 +51,19 @@ public class TargetManager : NetworkBehaviour
             target.invertGravityDirection();
         }
         //Todo: move up/down billboard text
+        StartCoroutine(MoveBillBoard());
+    }
+
+    IEnumerator MoveBillBoard(){
+        int i = 0;
+        while(i < 2){
+            if(gravityY > 0)
+                GameObject.Find("Billboard").gameObject.transform.Translate(new Vector3(0, 7/2, 0));
+            else
+                GameObject.Find("Billboard").gameObject.transform.Translate(new Vector3(0, -7/2, 0));
+            i++;
+            yield return new WaitForSeconds(1);
+        }
     }
 
     public Vector3 getGravity(){
@@ -88,6 +101,34 @@ public class TargetManager : NetworkBehaviour
         }
         GameObject billBoard = GameObject.Find("BillboardText").gameObject;
         billBoard.GetComponent<Text>().text = "Game over";
+    }
+
+    [ClientRpc]
+    public void RpcUpdatePoints(int clientID, int playerScore){
+        Text playerText;
+        if (clientID == 0){
+            Debug.Log("This is client " + clientID);
+            playerText = GameObject.Find("ScoreCanvas/Player 1").GetComponent("Text") as Text;
+            playerText.GetComponent<UnityEngine.UI.Text>().text = "Player 1: " + playerScore.ToString();
+
+        }
+        else if (clientID == 1){
+            Debug.Log("This is client " + clientID);
+            playerText = GameObject.Find("ScoreCanvas/Player 2").GetComponent("Text") as Text;
+            playerText.GetComponent<UnityEngine.UI.Text>().text = "Player 2: " + playerScore.ToString();
+
+        }
+        else if (clientID == 2){
+            Debug.Log("This is client " + clientID);
+            playerText = GameObject.Find("ScoreCanvas/Player 3").GetComponent("Text") as Text;
+            playerText.GetComponent<UnityEngine.UI.Text>().text = "Player 3: " + playerScore.ToString();
+
+        }
+        else{
+            Debug.Log("This is client " + clientID);
+            playerText = GameObject.Find("ScoreCanvas/Player 4").GetComponent("Text") as Text;
+            playerText.GetComponent<UnityEngine.UI.Text>().text = "Player 4: " + playerScore.ToString();
+        }
     }
 
     void Shuffle (List<string> deck) {
