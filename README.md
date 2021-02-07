@@ -4,13 +4,14 @@ Group Name: The artist formally known as neko uwu
 
 Group Members: Jia Kuang, Andrew Wentzel, Sofia Landeta(?)
 
+Game Title: Cat Cache
+
 Game Idea: The players (cats) are trapped in a computer (large cube) and shown items (computer instructions) that they need to reach in a specific order.  The players race to reach their targets in an order that is shown beforehand while impeding other cats in order to earn cat food.
 
-
 ### Executive Summary
-//Description of the game idea, premise, and platform
+Description: Cat Cache is a game where 2-4 players play as cats stuck in a giant computer.  All 4 cats are given instructions about where in the computers memory they need to go in order to follow the program run by the computer.  When the wrong memory is accessed, the computer "glitches" and gravity switches directions.  Cat Cache is run on a computer using unity and is played with just a keyboard.
 
-Audience Analysis: //Who is the target audience (age, gender, type of players, occupation)
+Audience Analysis: Cat Cache is a short, fun game designed for casual players, and players ages 8-14 who are interested in learning about computers in school.
 
 ### Formal Elements
 Player Interaction Pattern: Multilateral Competition
