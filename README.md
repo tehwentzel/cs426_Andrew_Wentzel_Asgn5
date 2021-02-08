@@ -22,13 +22,13 @@ Procedures:
 * Where: In a computer (cube)
 * How: Players must touch the obstacles in a specific order.  The player will use W and D to accelerate and decelerate, A and D to change direction.
 
-Rules: 4 addresses are listed on a screen that show the targets the player must hit. The first player to hit the targets in the correct order wins.  When a correct target is hit, it will chang to red for the player and the player will gain a point. When an incorrest target is hit, it will flash red, and gravity will change directions for all players.
+Rules: 4 addresses are listed on a screen that show the targets the player must hit. The first player to hit the targets in the correct order wins.  When a correct target is hit, the cube will become green for the player and the player will gain a point. When an incorrest target is hit, it will flash red, and gravity will change directions for all players.
 
 Resources: Player characters and Target cubes.
 
 Conflict: Players compete with each other to hit the targets first.  Players can move the targets and can invert gravity by hitting the wrong target, impeding other's progress.
 
-Boundaries: The game is in a 3-d “cube” that contains the game with random obstacles.
+Boundaries: The game is within a 3-d “cube” that contains random obstacles.
 
 Outcome: The first player to hit the targets in the correct order wins and all targets are deactivated.
 
