@@ -38,15 +38,14 @@ public class PlayerScore : ManagedBehaviour
         //increment the score if you hit the right target
         if(!isLoaded)
             return;
-
+        int clientID = connectionToClient.connectionId;
         if(score < addresses.Count){
             score += 1;
-            int clientID = connectionToClient.connectionId;
             targetManager.RpcUpdatePoints(clientID, score);
 
         }
-        if(score >= addresses.Count){
-            targetManager.RpcWin();
+        if(score >= addresses.Count - 3){
+            targetManager.RpcWin(clientID);
         }
     }
 
