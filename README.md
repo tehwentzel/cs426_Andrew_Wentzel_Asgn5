@@ -6,7 +6,7 @@ Group Members: Jia Kuang, Andrew Wentzel, Sofia Landeta(?)
 
 Game Title: Cat Cache
 
-Game Idea: The players (cats) are trapped in a computer (large cube) and shown items (computer instructions) that they need to reach in a specific order.  The players race to reach their targets in an order that is shown beforehand while impeding other cats in order to earn cat food.
+Game Idea: The players (cats) are trapped in a computer (large cube) and shown addresses (computer instructions) that they need to reach in a specific order.  The players race to reach their targets in an order that is shown beforehand while impeding other cats in order to earn cat food. 
 
 ### Executive Summary
 Description: Cat Cache is a game where 2-4 players play as cats stuck in a giant computer.  All 4 cats are given instructions about where in the computers memory they need to go in order to follow the program run by the computer.  When the wrong memory is accessed, the computer "glitches" and gravity switches directions.  Cat Cache is run on a computer using unity and is played with just a keyboard.
@@ -30,6 +30,6 @@ Conflict: Players compete with each other to hit the targets first.  Players can
 
 Boundaries: The game is within a 3-d “cube” that contains random obstacles.
 
-Outcome: The first player to hit the targets in the correct order wins and all targets are deactivated.
+Outcome: The first player to hit the targets in the correct order wins and all targets are deactivated. The winning player then wins cat food.
 
 Unusual Procedure: Gravity will change directions when a player hits an incorrect target and the targets may respawn in different coordinates
