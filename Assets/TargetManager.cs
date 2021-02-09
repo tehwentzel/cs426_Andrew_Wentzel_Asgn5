@@ -8,11 +8,7 @@ public class TargetManager : NetworkBehaviour
 {
     public Target[] targets;
     public SyncListString addresses = new SyncListString();
-
-    //begings of attempt to make something keep track of score
-    public Dictionary<string, int> playerDict;
-    [SyncVar]
-    int numPlayers = 1;
+    public GameObject winObject;
 
     [SyncVar]
     public float gravityY = -10.0f;
@@ -97,7 +93,9 @@ public class TargetManager : NetworkBehaviour
         //todo: do stuff in a win event here
         Debug.Log("Game over");
         foreach(var target in targets){
-            target.setInactive();
+            // target.setInactive();
+            Instantiate(winObject, target.transform.position, target.transform.rotation);
+            Destroy(target.gameObject);
         }
         GameObject billBoard = GameObject.Find("BillboardText").gameObject;
         billBoard.GetComponent<Text>().text = "Game over";
