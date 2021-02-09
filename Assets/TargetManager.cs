@@ -62,11 +62,16 @@ public class TargetManager : NetworkBehaviour
 
     IEnumerator MoveBillBoard(){
         int i = 0;
+        Vector3 moveVector;
+        if(gravityY > 0){
+            moveVector = new Vector3(0, 7/2, 0);
+        } else{
+            moveVector = new Vector3(0,-7/2, 0);
+        }
         while(i < 2){
-            if(gravityY > 0)
-                GameObject.Find("Billboard").gameObject.transform.Translate(new Vector3(0, 7/2, 0));
-            else
-                GameObject.Find("Billboard").gameObject.transform.Translate(new Vector3(0, -7/2, 0));
+            
+            GameObject.Find("Billboard").gameObject.transform.Translate(moveVector);
+            GameObject.Find("DirectionsBoard").gameObject.transform.Translate(moveVector);
             i++;
             yield return new WaitForSeconds(1);
         }
