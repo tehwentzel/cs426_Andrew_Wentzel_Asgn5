@@ -15,7 +15,7 @@ public class TargetManager : NetworkBehaviour
 
     [SyncVar]
     public float gravityY = -10.0f;
-    private float maxScore = 4; //dont include some of the targets
+    private int maxScore = 4; //dont include some of the targets
     // Start is called before the first frame update
 
     //This should probably be made into a singleton pattern is I use it for more than like 2 seconds of gameplay
@@ -28,13 +28,17 @@ public class TargetManager : NetworkBehaviour
             //use these premade addresses, shuffles them, as assigns them to targets
             List<string> baseAddresses = new List<string> {"0xa1b2c3d4", "0x3A28214A","0x6339392C","0x7363682E","CPU","0x0000000","USB"};
             List<int> baseAddressOrder = new List<int> {3,1,0,2};
+
             //this will be the end order that the player needs to hit the targets in
+
             ShuffleString(baseAddresses);
             ShuffleInt(baseAddressOrder);
+
             int currAddressIdx = 0;
             foreach(var target in targets){
                 string currAddress = baseAddresses[currAddressIdx];
                 target.setAddress(baseAddresses[currAddressIdx]);
+
                 if(currAddressIdx < maxScore){
                     addresses.Add(currAddress);
                     addressOrder.Add(baseAddressOrder[currAddressIdx]);
@@ -75,8 +79,17 @@ public class TargetManager : NetworkBehaviour
     void postAddresses(){
         string billBoardText = "Instructions:\n";
         string directionBoardText = "";
-        foreach(int addrIdx in addressOrder){
-            string addr = addresses[addrIdx];
+
+        List<string> postAddresses = new List<string> (new string[addresses.Count+1]);
+
+        for(int i=0; i< addressOrder.Count; i++){
+            int addrIdx = addressOrder[i];
+            postAddresses[addrIdx] = addresses[i];
+        }
+
+        for(int i=0; i < addresses.Count; i++){
+            string addr = postAddresses[i];
+            int addrIdx = addressOrder[i];
             billBoardText += addr;
             billBoardText += "\n";
 
@@ -103,12 +116,10 @@ public class TargetManager : NetworkBehaviour
     [ClientRpc]
     public void RpcWin(int clientID){
         //todo: do stuff in a win event here
-        Debug.Log("Game over");
         targets = (Target[]) (GameObject.FindObjectsOfType(typeof(Target)));
         foreach(var target in targets){
             // target.setInactive();
             if(winObject != null){
-                Debug.Log("fish");
                 GameObject fish = (GameObject) Instantiate(winObject.gameObject, target.transform.position, target.transform.rotation);
                 Destroy(target.gameObject);
                 NetworkServer.Spawn(fish);
@@ -128,29 +139,11 @@ public class TargetManager : NetworkBehaviour
     [ClientRpc]
     public void RpcUpdatePoints(int clientID, int playerScore){
         Text playerText;
-        if (clientID == 0){
-            Debug.Log("This is client " + clientID);
-            playerText = GameObject.Find("ScoreCanvas/Player 1").GetComponent("Text") as Text;
-            playerText.GetComponent<UnityEngine.UI.Text>().text = "Player 1: " + playerScore.ToString();
-
-        }
-        else if (clientID == 1){
-            Debug.Log("This is client " + clientID);
-            playerText = GameObject.Find("ScoreCanvas/Player 2").GetComponent("Text") as Text;
-            playerText.GetComponent<UnityEngine.UI.Text>().text = "Player 2: " + playerScore.ToString();
-
-        }
-        else if (clientID == 2){
-            Debug.Log("This is client " + clientID);
-            playerText = GameObject.Find("ScoreCanvas/Player 3").GetComponent("Text") as Text;
-            playerText.GetComponent<UnityEngine.UI.Text>().text = "Player 3: " + playerScore.ToString();
-
-        }
-        else{
-            Debug.Log("This is client " + clientID);
-            playerText = GameObject.Find("ScoreCanvas/Player 4").GetComponent("Text") as Text;
-            playerText.GetComponent<UnityEngine.UI.Text>().text = "Player 4: " + playerScore.ToString();
-        }
+        int playerNum = clientID + 1;
+        string playerString = "Player " + playerNum;
+        playerText = GameObject.Find("ScoreCanvas/"+playerString).GetComponent("Text") as Text;
+        if(playerText != null)
+            playerText.GetComponent<UnityEngine.UI.Text>().text = playerString + ": " + playerScore.ToString();
     }
 
     void ShuffleString (List<string> deck) {

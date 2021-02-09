@@ -44,7 +44,7 @@ public class PlayerScore : ManagedBehaviour
             targetManager.RpcUpdatePoints(clientID, score);
 
         }
-        if(score >= addresses.Count - 3){
+        if(score >= addresses.Count){
             targetManager.RpcWin(clientID);
         }
     }
