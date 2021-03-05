@@ -76,6 +76,20 @@ public class PlayerMove : ManagedBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision){
+        if(!isLocalPlayer || !isLoaded)
+            return;
+
+        if(collision.gameObject.tag == "Wire"){
+            //if we get hit by a player who is not supposed to hit us, invert gravity
+            float force = -400f;
+            Vector3 collisionDir = collision.contacts[0].point - transform.position;
+            Vector3 pushBack = new Vector3(collisionDir.normalized.x, 0, collisionDir.normalized.z);
+            rb.AddForce(force*(30*pushBack + targetManager.getGravity()));
+        }
+        //on collision adding point to the score
+    }
+
     public override void OnStartLocalPlayer(){
         //based on onine code, set the main camera target to follow the player
         GetComponent<MeshRenderer>().material.color = Color.red;

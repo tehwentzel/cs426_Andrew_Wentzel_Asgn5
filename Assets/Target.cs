@@ -29,6 +29,7 @@ public class Target : ManagedBehaviour
 
     // Update is called once per frame
     void FixedUpdate(){ 
+        
         //rotate text to look at the player camera. Don't know if this works with networking
         addressText.text = address;
         addressCanvas.transform.LookAt(Camera.main.transform);

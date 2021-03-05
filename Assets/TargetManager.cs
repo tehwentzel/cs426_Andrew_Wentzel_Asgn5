@@ -12,6 +12,7 @@ public class TargetManager : NetworkBehaviour
     public GameObject winObject;
 
     public GameObject winText;
+    public AudioSource winAudio;
 
     [SyncVar]
     public float gravityY = -10.0f;
@@ -23,6 +24,7 @@ public class TargetManager : NetworkBehaviour
     {
         //finds all objects with the Target script
         if(isServer){
+            winAudio = GetComponent<AudioSource>();
             targets = (Target[]) (GameObject.FindObjectsOfType(typeof(Target)));
 
             //use these premade addresses, shuffles them, as assigns them to targets
@@ -121,6 +123,7 @@ public class TargetManager : NetworkBehaviour
     [ClientRpc]
     public void RpcWin(int clientID){
         //todo: do stuff in a win event here
+        winAudio.PlayOneShot(winAudio.clip);
         targets = (Target[]) (GameObject.FindObjectsOfType(typeof(Target)));
         foreach(var target in targets){
             // target.setInactive();
@@ -130,6 +133,7 @@ public class TargetManager : NetworkBehaviour
                 NetworkServer.Spawn(fish);
             }
         }
+        
         GameObject billBoard = GameObject.Find("BillboardText").gameObject;
         billBoard.GetComponent<Text>().text = "Game over";
 
@@ -143,6 +147,7 @@ public class TargetManager : NetworkBehaviour
 
     [ClientRpc]
     public void RpcUpdatePoints(int clientID, int playerScore){
+        
         Text playerText;
         int playerNum = clientID + 1;
         string playerString = "Player " + playerNum;

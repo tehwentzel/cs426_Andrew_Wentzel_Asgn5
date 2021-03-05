@@ -11,11 +11,21 @@ public class PlayerScore : ManagedBehaviour
     [SyncVar]
     public int score = 0;
     public int maxScore;
+    AudioSource wrongAudio;
+
+    [SyncVar]
+    public float timeSinceLastScore = 0.0f;
+    public float timeOfLastScore;
+
+    void Start(){
+        wrongAudio = GetComponent<AudioSource>();
+        timeOfLastScore = Time.time;
+    }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        timeSinceLastScore = (Time.time - timeOfLastScore);
     }
 
     public override void OnStartClient(){
@@ -31,6 +41,11 @@ public class PlayerScore : ManagedBehaviour
         //add the player to the target manager here maybe?
         ///
         isLoaded = true;
+    }
+
+    public void resetDownTime(){
+        timeOfLastScore = Time.time;
+        timeSinceLastScore = 0.0f;
     }
 
     [Command]
@@ -79,7 +94,7 @@ public class PlayerScore : ManagedBehaviour
             Target target = (Target) collision.gameObject.GetComponent(typeof(Target));
             if(!target.isActive)
                 return;
-
+            resetDownTime();
             MeshRenderer targetMesh = collision.gameObject.GetComponent<MeshRenderer>();
 
             if(target.getAddress() == currentTargetAddress()){
@@ -91,6 +106,7 @@ public class PlayerScore : ManagedBehaviour
                 {
                     CmdInvertGravity();
                     //only flash to red if it's not alread red or green
+                    wrongAudio.PlayOneShot(wrongAudio.clip);
                     StartCoroutine(FlashColor(targetMesh));
                 }
             }
