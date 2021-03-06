@@ -1,12 +1,37 @@
-# cs426_assignment2
+# cs426_assignment5
+### Cat Cache 2
+### Andrew Wentzel
 
-Group Name: The artist formally known as neko uwu
+#### Description
 
-Group Members: Jia Kuang, Andrew Wentzel, Sofia Landeta(?)
+#### Design Changes
+Cat Cache originally was a game in which each player needed to hit different cubes in a certain order dictated by the "program" instructions on a screne.  This update adds additional background features and 2 new features: obstacles (capacitors), and a "garbage collector", the chases users to disrupt them if they haven't hit a block
 
-Game Title: Cat Cache
+#### Physics Contructs
+ * Garbage Collector:  A sphere in the middle of the map.  Follows game gravity.  If a player has not hit a target cube in at least 3 seconds, it will "turn on", turning red and activating a spot light, and follow the player with the longest period of inactivity.  On collision with a player, a sound plays, the player is thrown away, and their inactivity timer is reset.
 
-Game Idea: The players (cats) are trapped in a computer (large cube) and shown addresses (computer instructions) that they need to reach in a specific order.  The players race to reach their targets in an order that is shown beforehand while impeding other cats in order to earn cat food. 
+  * Capacitors: Blue cylinders in the game.  Follows game gravity but do not move in the x-z plane.  On a collision the cat is zapped: a "zap" sound plays and the cat is thrown up and away from the point of collision.
+
+#### Billboard
+Signs with camera tracking
+ * A background image in one side with a scene of cool cyberspace like imagery (obtained from shutterstock.com)
+ * Some cpu fans (made by Freepik from flaticon.com)
+
+Static Signs
+ * A sign warning of the dangers of a touching a capacity
+
+ #### Sound
+ * A zap sound is played on a collision with a capacitor cylinder
+ * A laser sound is played on a collision between a player and the garbage collector sphere
+ * A buzzer sound plays when the player hits an incorrect target cube
+ * Polite applause plays on a game win
+
+ #### Lighting
+  * The screen with instructions has a new yellow light source 
+  * All billboards mentioned have their own collored spotlight for illumination
+  * The garbage collector has a red light that shines on the player when it is actively chasing the player.
+
+## Original Writeup
 
 ### Executive Summary
 Description: Cat Cache is a game where 2-4 players play as cats stuck in a giant computer.  All 4 cats are given instructions about where in the computers memory they need to go in order to follow the program run by the computer.  When the wrong memory is accessed, the computer "glitches" and gravity switches directions.  Cat Cache is run on a computer using unity and is played with just a keyboard.
