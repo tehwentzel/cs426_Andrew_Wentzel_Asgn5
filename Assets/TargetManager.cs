@@ -23,8 +23,8 @@ public class TargetManager : NetworkBehaviour
     void Start()
     {
         //finds all objects with the Target script
-        if(isServer){
-            winAudio = GetComponent<AudioSource>();
+        if(isServer ){
+        winAudio = GetComponent<AudioSource>();
             targets = (Target[]) (GameObject.FindObjectsOfType(typeof(Target)));
 
             //use these premade addresses, shuffles them, as assigns them to targets
@@ -112,7 +112,7 @@ public class TargetManager : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        postAddresses();
     }
 
     public SyncListString getAddresses(){
