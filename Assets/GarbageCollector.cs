@@ -10,6 +10,7 @@ public class GarbageCollector : NetworkBehaviour
     TargetManager targetManager;
     AudioSource laserAudio;
     Light flashLight;
+    bool gameFinished = false;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +57,8 @@ public class GarbageCollector : NetworkBehaviour
         }
         if(lowestPlayer != null){
             moveToPlayer(lowestPlayer);
+        } else{
+            resetSelf();
         }
     }
 
